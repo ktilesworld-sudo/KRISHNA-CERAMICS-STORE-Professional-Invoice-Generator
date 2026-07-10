@@ -124,7 +124,14 @@ function setInvoiceDate(){
 ========================================================== */
 
 let workbook = null;
+let workbook = null;
 
+let partyData = [];
+let productData = [];
+let transportData = [];
+
+const excelInput =
+document.getElementById("excelFile");
 const excelInput =
 document.getElementById("excelFile");
 
@@ -162,7 +169,54 @@ function loadExcel(event){
             type:"array"
 
         });
+/* ===========================================
+   READ PARTY MASTER
+=========================================== */
 
+const partySheet =
+workbook.Sheets["Party_Master"];
+
+partyData =
+XLSX.utils.sheet_to_json(
+partySheet,
+{
+    range:4
+}
+);
+
+/* ===========================================
+   READ PRODUCT MASTER
+=========================================== */
+
+const productSheet =
+workbook.Sheets["Product_Master"];
+
+productData =
+XLSX.utils.sheet_to_json(
+productSheet,
+{
+    range:4
+}
+);
+
+/* ===========================================
+   READ TRANSPORT MASTER
+=========================================== */
+
+const transportSheet =
+workbook.Sheets["Transport_Master"];
+
+transportData =
+XLSX.utils.sheet_to_json(
+transportSheet,
+{
+    range:4
+}
+);
+
+console.log(partyData);
+console.log(productData);
+console.log(transportData);
         console.log(
             "✅ Excel Loaded"
         );
