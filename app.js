@@ -119,3 +119,64 @@ function setInvoiceDate(){
         `${yyyy}-${mm}-${dd}`;
 
 }
+/* ==========================================================
+   EXCEL DATABASE
+========================================================== */
+
+let workbook = null;
+
+const excelInput =
+document.getElementById("excelFile");
+
+if(excelInput){
+
+    excelInput.addEventListener(
+        "change",
+        loadExcel
+    );
+
+}
+
+function loadExcel(event){
+
+    const file =
+    event.target.files[0];
+
+    if(!file){
+
+        return;
+
+    }
+
+    const reader =
+    new FileReader();
+
+    reader.onload = function(e){
+
+        const data =
+        new Uint8Array(e.target.result);
+
+        workbook =
+        XLSX.read(data,{
+
+            type:"array"
+
+        });
+
+        console.log(
+            "✅ Excel Loaded"
+        );
+
+        console.log(
+            workbook.SheetNames
+        );
+
+        alert(
+            "✅ Master Database Loaded Successfully"
+        );
+
+    };
+
+    reader.readAsArrayBuffer(file);
+
+}
