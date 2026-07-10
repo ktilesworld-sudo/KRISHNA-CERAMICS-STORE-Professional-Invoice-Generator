@@ -6,19 +6,23 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+content="width=device-width,initial-scale=1.0">
 
 <meta name="theme-color"
 content="#17375E">
 
-<meta name="description"
-content="KRISHNA CERAMICS STORE Professional Invoice Generator">
-
 <title>
+
 KRISHNA CERAMICS STORE
+
 </title>
 
-<link rel="stylesheet"
+<meta
+name="description"
+content="Professional Invoice PDF Generator">
+
+<link
+rel="stylesheet"
 href="style.css">
 
 </head>
@@ -27,21 +31,21 @@ href="style.css">
 
 <div class="app">
 
-<!-- =========================
-     HEADER
-========================= -->
+<!-- ===========================
+HEADER
+=========================== -->
 
 <header class="header">
 
-<div class="header-content">
+<div class="header-left">
 
-<div class="company-logo">
+<div class="logo">
 
 LOGO
 
 </div>
 
-<div class="company-details">
+<div class="company">
 
 <h1>
 
@@ -51,7 +55,7 @@ KRISHNA CERAMICS STORE
 
 <p>
 
-Professional Invoice Generator
+Professional Invoice PDF Generator
 
 </p>
 
@@ -61,37 +65,16 @@ Professional Invoice Generator
 
 </header>
 
-<!-- =========================
-     HOME
-========================= -->
+<!-- ===========================
+HOME SCREEN
+=========================== -->
 
-<main class="home">
+<main
+id="homeScreen">
 
-<section class="welcome-box">
-<div class="invoice-card">
+<section
+class="welcome-card">
 
-<h3>
-
-📂 Master Database
-
-</h3>
-
-<p>
-
-Select Your Excel Master File
-
-</p>
-
-<div class="form-group">
-
-<input
-type="file"
-id="excelFile"
-accept=".xlsx,.xls">
-
-</div>
-
-</div>
 <h2>
 
 Welcome Krishna 👋
@@ -100,439 +83,123 @@ Welcome Krishna 👋
 
 <p>
 
-Create Professional Corporate
-Invoice PDF Within Seconds
+Create Professional GST Invoice PDF
+Using Your Master Database
 
 </p>
 
 </section>
 
-<section class="menu-grid">
+<section
+class="menu-grid">
 
-<button class="menu-card"
+<button
 id="newInvoice">
 
-<span>📄</span>
+📄
 
-<h3>
+<span>
 
 New Invoice
 
-</h3>
-
-<p>
-
-Create Invoice PDF
-
-</p>
+</span>
 
 </button>
 
-<button class="menu-card">
+<button
+id="partyMaster">
 
-<span>👥</span>
+👥
 
-<h3>
+<span>
 
 Party Master
 
-</h3>
-
-<p>
-
-View Parties
-
-</p>
+</span>
 
 </button>
 
-<button class="menu-card">
+<button
+id="productMaster">
 
-<span>📦</span>
+📦
 
-<h3>
+<span>
 
 Product Master
 
-</h3>
-
-<p>
-
-View Products
-
-</p>
+</span>
 
 </button>
 
-<button class="menu-card">
+<button
+id="transportMaster">
 
-<span>🚚</span>
+🚚
+
+<span>
+
+Transport Master
+
+</span>
+
+</button>
+
+</section>
+
+<section
+class="database-box">
 
 <h3>
 
-Transport
+Master Database
 
 </h3>
 
 <p>
 
-View Transport
+Select Your Excel Database
 
 </p>
 
-</button>
+<input
+type="file"
+id="excelFile"
+accept=".xlsx,.xls">
 
 </section>
 
 </main>
-<!-- ==========================================
-     INVOICE SCREEN
-========================================== -->
 
-<section
+<!-- ===========================
+INVOICE SCREEN
+PART 2
+=========================== -->
+
+<main
 id="invoiceScreen"
-class="invoice-screen"
 style="display:none;">
 
-<div class="invoice-header">
-
-<h2>
-
-Sales Invoice
-
-</h2>
-
-<p>
-
-Create Professional PDF Invoice
-
-</p>
-
-</div>
-
-<div class="invoice-card">
-
-<div class="form-group">
-
-<label>
-
-Invoice No.
-
-</label>
-
-<input
-type="text"
-id="invoiceNo"
-value="INV-2026-00001"
-readonly>
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Invoice Date
-
-</label>
-
-<input
-type="date"
-id="invoiceDate">
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Select Party
-
-</label>
-
-<select
-id="partySelect">
-<!-- ==========================================
-     PARTY DETAILS
-========================================== -->
-
-<div class="invoice-card">
-
-<h3>
-
-Party Details
-
-</h3>
-
-<div class="form-group">
-
-<label>
-
-Party Name
-
-</label>
-
-<input
-type="text"
-id="partyName"
-readonly>
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Address
-
-</label>
-
-<textarea
-id="partyAddress"
-rows="3"
-readonly></textarea>
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-GSTIN
-
-</label>
-
-<input
-type="text"
-id="partyGST"
-readonly>
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Mobile Number
-
-</label>
-
-<input
-type="text"
-id="partyMobile"
-readonly>
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-WhatsApp Number
-
-</label>
-
-<input
-type="text"
-id="partyWhatsapp"
-readonly>
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Contact Person
-
-</label>
-
-<input
-type="text"
-id="partyContact"
-readonly>
-
-</div>
-
-</div>
-<option>
-
-Select Party
-
-</option>
-
-</select>
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Select Transport
-
-</label>
-
-<select
-id="transportSelect">
-
-<option>
-
-Select Transport
-
-</option>
-
-</select>
-
-</div>
-
-</div>
-
-<div class="invoice-card">
-
-<h3>
-
-Product Details
-
-</h3>
-
-<div class="form-group">
-
-<label>
-
-Select Product
-
-</label>
-
-<select
-id="productSelect">
-
-<option>
-
-Select Product
-
-</option>
-
-</select>
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Quantity
-
-</label>
-
-<input
-type="number"
-id="qty"
-placeholder="Enter Quantity">
-
-</div>
-
-<button
-class="primary-btn"
-id="addItem">
-
-+ Add Item
-
-</button>
-
-</div>
-
-<div class="invoice-card">
-
-<h3>
-
-Invoice Total
-
-</h3>
-
-<div class="summary-row">
-
-<span>
-
-Sub Total
-
-</span>
-
-<strong>
-
-₹0.00
-
-</strong>
-
-</div>
-
-<div class="summary-row">
-
-<span>
-
-GST
-
-</span>
-
-<strong>
-
-₹0.00
-
-</strong>
-
-</div>
-
-<div class="summary-row grand-total">
-
-<span>
-
-Grand Total
-
-</span>
-
-<strong>
-
-₹0.00
-
-</strong>
-
-</div>
-
-<button
-class="generate-btn"
-id="generatePdf">
-
-📄 Generate PDF
-
-</button>
-
-</div>
-
-</section>
-<!-- =========================
-     FOOTER
-========================= -->
-
-<footer class="footer">
-
-<p>
-
-Version 1.0
-
-</p>
-
-<p>
+<!--
+PART 2
+Invoice Screen
+Will Come Here
+-->
+
+</main>
+
+<footer>
 
 © 2026
-KRISHNA CERAMICS STORE
 
-</p>
+KRISHNA CERAMICS STORE
 
 </footer>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script src="libraries/xlsx.full.min.js"></script>
+
 <script src="app.js"></script>
 
 </body>
