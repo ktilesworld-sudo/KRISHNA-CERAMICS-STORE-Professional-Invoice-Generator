@@ -1,300 +1,411 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
-
-<meta name="theme-color"
-content="#17375E">
-
-<title>
-
-KRISHNA CERAMICS STORE
-
-</title>
-
-<meta
-name="description"
-content="Professional Invoice PDF Generator">
-
-<link
-rel="stylesheet"
-href="style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- Primary Meta Tags -->
+    <title>KRISHNA CERAMICS STORE — Professional Invoice PDF Generator</title>
+    <meta name="title" content="KRISHNA CERAMICS STORE — Professional Invoice PDF Generator">
+    <meta name="description" content="Production-ready Progressive Web App for generating professional GST tax invoices. Mobile-first, offline capable, and powered by your master database.">
+    <meta name="keywords" content="Krishna Ceramics, Invoice Generator, GST Invoice, Tiles Invoice, Professional PDF, Morbi Tiles, PWA Invoice">
+    <meta name="author" content="Krishna Ceramics Store">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Theme & PWA -->
+    <meta name="theme-color" content="#17375E">
+    <meta name="msapplication-TileColor" content="#17375E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Krishna Invoice">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Open Graph / Facebook -->
+    <!-- TODO: Replace placeholder URL with your actual domain -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.com/">
+    <meta property="og:title" content="KRISHNA CERAMICS STORE — Professional Invoice PDF Generator">
+    <meta property="og:description" content="Create beautiful, professional GST-compliant tax invoices instantly. Works offline and installs as an app.">
+    <meta property="og:image" content="assets/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://your-domain.com/">
+    <meta property="twitter:title" content="KRISHNA CERAMICS STORE — Professional Invoice PDF Generator">
+    <meta property="twitter:description" content="Production-ready Progressive Web App for generating professional GST tax invoices.">
+    <meta property="twitter:image" content="assets/og-image.jpg">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon & Apple Touch Icons (Placeholders - replace files in /assets/ folder) -->
+    <!-- Placeholder favicons - create actual files in assets/ folder for production -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <link rel="mask-icon" href="assets/safari-pinned-tab.svg" color="#17375E">
+    
+    <!-- Preload critical resources for performance -->
+    <link rel="preload" href="style.css" as="style">
+    <link rel="preload" href="app.js" as="script">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-<div class="app">
-
-<!-- ===========================
-HEADER
-=========================== -->
-
-<header class="header">
-
-<div class="header-left">
-
-<div class="logo">
-
-LOGO
-
-</div>
-
-<div class="company">
-
-<h1>
-
-KRISHNA CERAMICS STORE
-
-</h1>
-
-<p>
-
-Professional Invoice PDF Generator
-
-</p>
-
-</div>
-
-</div>
-
-</header>
-
-<!-- ===========================
-HOME SCREEN
-=========================== -->
-
-<main
-id="homeScreen">
-
-<section
-class="welcome-card">
-
-<h2>
-
-Welcome Krishna 👋
-
-</h2>
-
-<p>
-
-Create Professional GST Invoice PDF
-Using Your Master Database
-
-</p>
-
-</section>
-
-<section
-class="menu-grid">
-
-<button
-id="newInvoice">
-
-📄
-
-<span>
-
-New Invoice
-
-</span>
-
-</button>
-
-<button
-id="partyMaster">
-
-👥
-
-<span>
-
-Party Master
-
-</span>
-
-</button>
-
-<button
-id="productMaster">
-
-📦
-
-<span>
-
-Product Master
-
-</span>
-
-</button>
-
-<button
-id="transportMaster">
-
-🚚
-
-<span>
-
-Transport Master
-
-</span>
-
-</button>
-
-</section>
-
-<section
-class="database-box">
-
-<h3>
-
-Master Database
-
-</h3>
-
-<p>
-
-Select Your Excel Database
-
-</p>
-
-<input
-type="file"
-id="excelFile"
-accept=".xlsx,.xls">
-
-</section>
-
-</main>
-
-<!-- ===========================
-INVOICE SCREEN
-PART 2
-=========================== -->
-
-<main
-id="invoiceScreen"
-style="display:none;">
-
-<section class="invoice-page">
-
-<div class="invoice-title">
-
-<h2>
-
-Sales Invoice
-
-</h2>
-
-<p>
-
-Professional GST Tax Invoice
-
-</p>
-
-</div>
-
-<div class="invoice-box">
-
-<div class="form-row">
-
-<div class="form-group">
-
-<label>
-
-Invoice No.
-
-</label>
-
-<input
-type="text"
-id="invoiceNo"
-readonly>
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Invoice Date
-
-</label>
-
-<input
-type="date"
-id="invoiceDate">
-
-</div>
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Party Name
-
-</label>
-
-<select
-id="partySelect">
-
-<option value="">
-
-Select Party
-
-</option>
-
-</select>
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Transport
-
-</label>
-
-<select
-id="transportSelect">
-
-<option value="">
-
-Select Transport
-
-</option>
-
-</select>
-
-</div>
-
-</div>
-
-</section>
-
-</main>
-
-<footer>
-
-© 2026
-
-KRISHNA CERAMICS STORE
-
-</footer>
-
-</div>
-
-<script src="libraries/xlsx.full.min.js"></script>
-
-<script src="app.js"></script>
-
+    <div class="app">
+        
+        <!-- ===========================
+             HEADER
+        ============================ -->
+        <header class="header" role="banner">
+            <div class="header-left">
+                <div class="logo" role="img" aria-label="Krishna Ceramics Store Logo">
+                    <!-- Placeholder for Company Logo -->
+                    <div class="logo-placeholder" aria-hidden="true">
+                        <span>🧱</span>
+                    </div>
+                </div>
+                <div class="company">
+                    <h1>KRISHNA CERAMICS STORE</h1>
+                    <p>Professional Invoice PDF Generator</p>
+                </div>
+            </div>
+            
+            <!-- Future: User / Settings quick access -->
+            <div class="header-right" aria-label="Header actions">
+                <!-- Placeholder for Settings / Profile -->
+                <button id="settingsBtn" class="icon-btn" aria-label="Open Settings" style="display:none;">
+                    ⚙️
+                </button>
+            </div>
+        </header>
+
+        <!-- ===========================
+             HOME SCREEN
+        ============================ -->
+        <main id="homeScreen" role="main" aria-label="Home Screen">
+            
+            <section class="welcome-card" aria-labelledby="welcome-heading">
+                <h2 id="welcome-heading">Welcome Krishna 👋</h2>
+                <p>
+                    Create Professional GST Invoice PDF<br>
+                    Using Your Master Database
+                </p>
+            </section>
+
+            <section class="menu-grid" aria-label="Quick Actions">
+                <button id="newInvoice" class="menu-btn" aria-label="Create New Invoice">
+                    <span class="icon" aria-hidden="true">📄</span>
+                    <span>New Invoice</span>
+                </button>
+                
+                <button id="partyMaster" class="menu-btn" aria-label="View Party Master">
+                    <span class="icon" aria-hidden="true">👥</span>
+                    <span>Party Master</span>
+                </button>
+                
+                <button id="productMaster" class="menu-btn" aria-label="View Product Master">
+                    <span class="icon" aria-hidden="true">📦</span>
+                    <span>Product Master</span>
+                </button>
+                
+                <button id="transportMaster" class="menu-btn" aria-label="View Transport Master">
+                    <span class="icon" aria-hidden="true">🚚</span>
+                    <span>Transport Master</span>
+                </button>
+            </section>
+
+            <!-- Master Database Upload -->
+            <section class="database-box" aria-labelledby="db-heading">
+                <h3 id="db-heading">Master Database</h3>
+                <p>Select your Excel database file (Party, Product &amp; Transport)</p>
+                
+                <div class="file-upload-wrapper">
+                    <input 
+                        type="file" 
+                        id="excelFile" 
+                        accept=".xlsx,.xls" 
+                        aria-describedby="file-help"
+                        class="file-input">
+                    <label for="excelFile" class="file-label">
+                        📁 Choose Excel File
+                    </label>
+                    <p id="file-help" class="help-text">Supported format: .xlsx (Header row at row 5)</p>
+                </div>
+                
+                <!-- Database Status Placeholder -->
+                <div id="dbStatus" class="db-status" role="status" aria-live="polite">
+                    <!-- Populated by database.js -->
+                </div>
+            </section>
+
+            <!-- Invoice History Placeholder -->
+            <section class="history-section" aria-labelledby="history-heading" style="display:none;">
+                <h3 id="history-heading">Recent Invoices</h3>
+                <div id="invoiceHistoryList" class="history-list">
+                    <!-- Populated dynamically by future module -->
+                    <p class="empty-state">No invoices generated yet.</p>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- ===========================
+             INVOICE SCREEN
+             (Extended for full professional workflow)
+        ============================ -->
+        <main 
+            id="invoiceScreen" 
+            style="display:none;" 
+            role="main" 
+            aria-label="Create New Invoice">
+
+            <div class="invoice-page">
+                
+                <!-- Invoice Header -->
+                <div class="invoice-title">
+                    <h2>Sales Invoice</h2>
+                    <p>Professional GST Tax Invoice</p>
+                </div>
+
+                <!-- Invoice Meta & Party Selection -->
+                <div class="invoice-box">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="invoiceNo">Invoice No.</label>
+                            <input 
+                                type="text" 
+                                id="invoiceNo" 
+                                readonly 
+                                aria-describedby="invoiceNo-help">
+                            <small id="invoiceNo-help" class="help-text">Auto-generated</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="invoiceDate">Invoice Date</label>
+                            <input 
+                                type="date" 
+                                id="invoiceDate" 
+                                aria-label="Invoice Date">
+                        </div>
+                    </div>
+
+                    <!-- Party Selection -->
+                    <div class="form-group">
+                        <label for="partySelect">Party Name</label>
+                        <select id="partySelect" aria-label="Select Party">
+                            <option value="">Select Party</option>
+                        </select>
+                    </div>
+
+                    <!-- Auto-filled Party Details Placeholder -->
+                    <div id="partyDetailsCard" class="party-details-card" style="display:none;" aria-live="polite">
+                        <h4>Party Details</h4>
+                        <div class="details-grid">
+                            <div class="detail-item">
+                                <label>Party Name</label>
+                                <input type="text" id="partyName" readonly>
+                            </div>
+                            <div class="detail-item">
+                                <label>Address</label>
+                                <input type="text" id="partyAddress" readonly>
+                            </div>
+                            <div class="detail-item">
+                                <label>GSTIN</label>
+                                <input type="text" id="partyGSTIN" readonly>
+                            </div>
+                            <div class="detail-item">
+                                <label>Mobile / WhatsApp</label>
+                                <input type="text" id="partyMobile" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Transport Selection -->
+                    <div class="form-group">
+                        <label for="transportSelect">Transport</label>
+                        <select id="transportSelect" aria-label="Select Transport">
+                            <option value="">Select Transport</option>
+                        </select>
+                    </div>
+
+                    <!-- Transport Details Placeholder -->
+                    <div class="form-row" id="transportDetails" style="display:none;">
+                        <div class="form-group">
+                            <label for="lrNumber">LR Number</label>
+                            <input type="text" id="lrNumber" placeholder="Enter LR Number">
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicleNumber">Vehicle Number</label>
+                            <input type="text" id="vehicleNumber" placeholder="GJ-12-AB-1234">
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Add Product Section -->
+                <div class="invoice-box">
+                    <h3>Add Products</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group flex-2">
+                            <label for="productSelect">Product</label>
+                            <select id="productSelect" aria-label="Select Product">
+                                <option value="">Select Product</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productQty">Quantity</label>
+                            <input type="number" id="productQty" value="1" min="0.01" step="0.01" aria-label="Quantity">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productRate">Rate (Optional)</label>
+                            <input type="number" id="productRate" placeholder="Auto" step="0.01" aria-label="Rate override">
+                        </div>
+                        
+                        <div class="form-group align-end">
+                            <button id="addProductBtn" class="btn btn-primary" aria-label="Add product to invoice">
+                                + Add Item
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Invoice Items Table Placeholder -->
+                <div class="invoice-box">
+                    <h3>Invoice Items</h3>
+                    
+                    <div class="table-wrapper">
+                        <table class="invoice-table" aria-label="Invoice Items">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sr.</th>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">HSN</th>
+                                    <th scope="col">Qty</th>
+                                    <th scope="col">Rate</th>
+                                    <th scope="col">Taxable</th>
+                                    <th scope="col">GST</th>
+                                    <th scope="col">Total</th>
+                                    <th scope="col"><span class="sr-only">Actions</span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="invoiceItemsBody">
+                                <!-- Populated dynamically by invoice.js -->
+                                <tr class="empty-row">
+                                    <td colspan="9">
+                                        <div class="empty-state">
+                                            <p>No items added yet.</p>
+                                            <small>Use the form above to add products</small>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- GST Summary & Totals Placeholder -->
+                <div class="invoice-box totals-box">
+                    <div class="totals-grid">
+                        <div class="total-row">
+                            <span>Sub Total (Taxable Amount)</span>
+                            <strong id="subtotalAmount">₹ 0.00</strong>
+                        </div>
+                        <div class="total-row">
+                            <span>GST Total</span>
+                            <strong id="gstTotalAmount">₹ 0.00</strong>
+                        </div>
+                        <div class="total-row grand-total">
+                            <span>Grand Total</span>
+                            <strong id="grandTotalAmount">₹ 0.00</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="amount-in-words">
+                        <small>Amount in Words</small>
+                        <p id="amountInWords">Zero Rupees Only</p>
+                    </div>
+                </div>
+
+                <!-- Notes & Actions -->
+                <div class="invoice-box">
+                    <div class="form-group">
+                        <label for="invoiceNotes">Notes / Special Instructions (Optional)</label>
+                        <textarea id="invoiceNotes" rows="2" placeholder="Any special instructions for this invoice..."></textarea>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="clearInvoiceBtn" class="btn btn-outline" aria-label="Clear current invoice">
+                            Clear Invoice
+                        </button>
+                        
+                        <button id="generatePDFBtn" class="btn btn-success btn-large" aria-label="Generate and download professional PDF invoice">
+                            📄 Generate Professional PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PDF Preview Placeholder (Future) -->
+                <div id="pdfPreviewSection" class="invoice-box" style="display:none;">
+                    <h3>PDF Preview</h3>
+                    <div id="pdfPreviewContainer" class="pdf-preview-placeholder">
+                        <!-- Future: Embedded PDF preview or thumbnail -->
+                        <p>PDF preview will appear here after generation.</p>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- ===========================
+             PLACEHOLDERS FOR FUTURE MODULES
+        ============================ -->
+        
+        <!-- Settings Screen Placeholder -->
+        <main id="settingsScreen" style="display:none;" aria-label="Settings">
+            <div class="settings-page">
+                <h2>Settings</h2>
+                <!-- Future content: Company details, signature upload, terms, etc. -->
+            </div>
+        </main>
+
+        <!-- Signature Upload Placeholder -->
+        <div id="signatureSection" style="display:none;">
+            <label for="signatureUpload">Authorized Signature</label>
+            <input type="file" id="signatureUpload" accept="image/*">
+            <div id="signaturePreview"></div>
+        </div>
+
+        <!-- Bank Details Placeholder (for PDF) -->
+        <div id="bankDetailsSection" style="display:none;">
+            <h4>Bank Details</h4>
+            <!-- Populated from config or editable in settings -->
+        </div>
+
+        <!-- Toast Container -->
+        <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+        <!-- Footer -->
+        <footer role="contentinfo">
+            <p>© 2026 KRISHNA CERAMICS STORE — All Rights Reserved</p>
+            <p class="footer-note">Production Ready • Offline Capable • Mobile First</p>
+        </footer>
+
+    </div>
+
+    <!-- Scripts - Load order is important -->
+    <script src="libraries/xlsx.full.min.js"></script>
+    <script src="database.js"></script>
+    <script src="utils.js"></script>
+    <script src="ui.js"></script>
+    <script src="invoice.js"></script>
+    <script src="pdf.js"></script>
+    <script src="history.js"></script>
+    <script src="app.js"></script>
 </body>
-
 </html>
