@@ -534,3 +534,85 @@ transform:translateY(-2px);
 box-shadow:0 10px 25px rgba(0,0,0,.15);
 
 }
+/* ==========================================================
+   PARTY DETAILS
+========================================================== */
+
+.invoice-card textarea{
+
+width:100%;
+
+padding:14px;
+
+border:1px solid #D7DCE3;
+
+border-radius:12px;
+
+resize:none;
+
+font-size:15px;
+
+font-family:inherit;
+
+outline:none;
+
+background:#FAFBFC;
+
+transition:.30s;
+
+}
+
+.invoice-card textarea:focus{
+
+border-color:var(--secondary);
+
+box-shadow:0 0 0 3px rgba(47,117,181,.15);
+
+}
+
+.invoice-card input[readonly],
+.invoice-card textarea[readonly]{
+
+background:#F8FAFC;
+
+color:#374151;
+
+font-weight:500;
+
+}
+
+.invoice-card label{
+
+display:flex;
+
+align-items:center;
+
+gap:6px;
+
+}
+
+.invoice-card{
+
+animation:fadeIn .35s ease;
+
+}
+
+@keyframes fadeIn{
+
+from{
+
+opacity:0;
+
+transform:translateY(15px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
