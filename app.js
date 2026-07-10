@@ -73,12 +73,49 @@ function bindEvents() {
 
 function openInvoicePage() {
 
-    alert(
-`📄 New Invoice
+    const home =
+        document.querySelector(".home");
 
-Invoice Generator Screen
+    const invoice =
+        document.getElementById("invoiceScreen");
 
-Coming in PART 2 🚀`
-    );
+    if(home){
+
+        home.style.display = "none";
+
+    }
+
+    if(invoice){
+
+        invoice.style.display = "block";
+
+    }
+
+    setInvoiceDate();
+
+} 
+function setInvoiceDate(){
+
+    const invoiceDate =
+        document.getElementById("invoiceDate");
+
+    if(!invoiceDate) return;
+
+    const today =
+        new Date();
+
+    const yyyy =
+        today.getFullYear();
+
+    const mm =
+        String(today.getMonth()+1)
+        .padStart(2,"0");
+
+    const dd =
+        String(today.getDate())
+        .padStart(2,"0");
+
+    invoiceDate.value =
+        `${yyyy}-${mm}-${dd}`;
 
 }
