@@ -226,10 +226,107 @@ console.log(transportData);
 
         alert(
             "✅ Master Database Loaded Successfully"
-        );
+      );     
 
-    };
+loadPartyDropdown();
+
+loadProductDropdown();
+
+loadTransportDropdown();
+        
+   };
 
     reader.readAsArrayBuffer(file);
+
+}
+/* ==========================================================
+   PARTY DROPDOWN
+========================================================== */
+
+function loadPartyDropdown(){
+
+const select =
+document.getElementById("partySelect");
+
+if(!select) return;
+
+select.innerHTML =
+'<option value="">Select Party</option>';
+
+partyData.forEach((party,index)=>{
+
+const option =
+document.createElement("option");
+
+option.value=index;
+
+option.textContent=
+party["Party Name"] || party["Party"] || party["Name"];
+
+select.appendChild(option);
+
+});
+
+}
+
+
+/* ==========================================================
+   PRODUCT DROPDOWN
+========================================================== */
+
+function loadProductDropdown(){
+
+const select =
+document.getElementById("productSelect");
+
+if(!select) return;
+
+select.innerHTML =
+'<option value="">Select Product</option>';
+
+productData.forEach((item,index)=>{
+
+const option =
+document.createElement("option");
+
+option.value=index;
+
+option.textContent=
+item["Product Name"] || item["Product"];
+
+select.appendChild(option);
+
+});
+
+}
+
+
+/* ==========================================================
+   TRANSPORT DROPDOWN
+========================================================== */
+
+function loadTransportDropdown(){
+
+const select =
+document.getElementById("transportSelect");
+
+if(!select) return;
+
+select.innerHTML =
+'<option value="">Select Transport</option>';
+
+transportData.forEach((item,index)=>{
+
+const option =
+document.createElement("option");
+
+option.value=index;
+
+option.textContent=
+item["Transport Name"] || item["Transport"];
+
+select.appendChild(option);
+
+});
 
 }
