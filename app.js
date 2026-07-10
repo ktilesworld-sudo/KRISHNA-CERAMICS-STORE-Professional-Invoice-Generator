@@ -124,7 +124,7 @@ function setInvoiceDate(){
 ========================================================== */
 
 let workbook = null;
-let workbook = null;
+
 
 let partyData = [];
 let productData = [];
@@ -132,8 +132,7 @@ let transportData = [];
 
 const excelInput =
 document.getElementById("excelFile");
-const excelInput =
-document.getElementById("excelFile");
+
 
 if(excelInput){
 
