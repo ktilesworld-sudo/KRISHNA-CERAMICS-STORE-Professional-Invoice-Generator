@@ -228,7 +228,8 @@ console.log(transportData);
             "✅ Master Database Loaded Successfully"
       );     
 
-loadPartyDropdown();
+loadPartyDropdown(option.textContent =
+party["Party Name"] || party["Party"] || party["Name"];);
 
 loadProductDropdown();
 
