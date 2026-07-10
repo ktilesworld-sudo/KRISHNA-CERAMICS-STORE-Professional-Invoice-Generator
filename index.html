@@ -162,7 +162,228 @@ View Transport
 </section>
 
 </main>
+<!-- ==========================================
+     INVOICE SCREEN
+========================================== -->
 
+<section
+id="invoiceScreen"
+class="invoice-screen"
+style="display:none;">
+
+<div class="invoice-header">
+
+<h2>
+
+Sales Invoice
+
+</h2>
+
+<p>
+
+Create Professional PDF Invoice
+
+</p>
+
+</div>
+
+<div class="invoice-card">
+
+<div class="form-group">
+
+<label>
+
+Invoice No.
+
+</label>
+
+<input
+type="text"
+id="invoiceNo"
+value="INV-2026-00001"
+readonly>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Invoice Date
+
+</label>
+
+<input
+type="date"
+id="invoiceDate">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Select Party
+
+</label>
+
+<select
+id="partySelect">
+
+<option>
+
+Select Party
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Select Transport
+
+</label>
+
+<select
+id="transportSelect">
+
+<option>
+
+Select Transport
+
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="invoice-card">
+
+<h3>
+
+Product Details
+
+</h3>
+
+<div class="form-group">
+
+<label>
+
+Select Product
+
+</label>
+
+<select
+id="productSelect">
+
+<option>
+
+Select Product
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Quantity
+
+</label>
+
+<input
+type="number"
+id="qty"
+placeholder="Enter Quantity">
+
+</div>
+
+<button
+class="primary-btn"
+id="addItem">
+
++ Add Item
+
+</button>
+
+</div>
+
+<div class="invoice-card">
+
+<h3>
+
+Invoice Total
+
+</h3>
+
+<div class="summary-row">
+
+<span>
+
+Sub Total
+
+</span>
+
+<strong>
+
+₹0.00
+
+</strong>
+
+</div>
+
+<div class="summary-row">
+
+<span>
+
+GST
+
+</span>
+
+<strong>
+
+₹0.00
+
+</strong>
+
+</div>
+
+<div class="summary-row grand-total">
+
+<span>
+
+Grand Total
+
+</span>
+
+<strong>
+
+₹0.00
+
+</strong>
+
+</div>
+
+<button
+class="generate-btn"
+id="generatePdf">
+
+📄 Generate PDF
+
+</button>
+
+</div>
+
+</section>
 <!-- =========================
      FOOTER
 ========================= -->
