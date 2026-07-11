@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Krishna Ceramics Store - Premium Offline GST Invoice PWA">
+    <meta name="theme-color" content="#1E3A8A">
+    <title>Krishna Ceramics • Premium Invoice</title>
+    
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:wght@700&amp;display=swap');
+        
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .heading-serif { font-family: 'Playfair Display', Georgia, serif; }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(226, 232, 240, 0.6);
+        }
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.92);
+            border: 1px solid rgba(51, 65, 85, 0.6);
+        }
+
+        .premium-shadow { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25), 0 10px 10px -6px rgb(0 0 0 / 0.15); }
+        
+        .section-header { position: relative; display: inline-block; }
+        .section-header:after {
+            content: ''; position: absolute; bottom: -6px; left: 0; width: 55%; height: 3px;
+            background: linear-gradient(to right, #D4AF37, transparent); border-radius: 9999px;
+        }
+
+        .nav-active { background: linear-gradient(90deg, #1E3A8A, #3B82F6); color: white; box-shadow: 0 10px 15px -3px rgb(30 58 138 / 0.35); }
+
+        .modern-table { border-radius: 16px; overflow: hidden; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.06); }
+        
+        .premium-btn {
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            position: relative; overflow: hidden;
+        }
+        .premium-btn:after {
+            content: ''; position: absolute; top: -50%; left: -100%; width: 50%; height: 200%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+            transition: 0.6s;
+        }
+        .premium-btn:hover:after { left: 250%; }
+
+        .form-input {
+            transition: all 0.2s ease;
+        }
+        .form-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15);
+            border-color: #1E3A8A;
+        }
+
+        .invoice-line {
+            transition: background-color 0.15s ease;
+        }
+        .invoice-line:hover { background-color: #F8FAFC; }
+        .dark .invoice-line:hover { background-color: #1E293B; }
+
+        .screen { display: none; }
+        .screen.active { display: block; }
+
+        .metric-value { font-variant-numeric: tabular-nums; }
+        
+        .gold-text { color: #D4AF37; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    
+    <!-- Top Navigation -->
+    <nav class="sticky top-0 z-50 glass border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-x-4">
+                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#1E3A8A] to-[#3B82F6] flex items-center justify-center shadow-xl">
+                        <span class="text-white text-3xl font-bold tracking-tighter">KC</span>
+                    </div>
+                    <div>
+                        <span class="text-3xl font-semibold tracking-tighter heading-serif">Krishna Ceramics</span>
+                        <span class="text-xs text-slate-400 block -mt-1 tracking-[2px]">MORBI</span>
+                    </div>
+                </div>
+
+                <!-- Screen Tabs -->
+                <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-3xl p-1">
+                    <button onclick="showScreen('homeScreen')" id="nav-home"
+                            class="px-6 py-2 text-sm font-semibold rounded-3xl nav-active">Dashboard</button>
+                    <button onclick="showScreen('invoiceScreen')" id="nav-invoice"
+                            class="px-6 py-2 text-sm font-semibold rounded-3xl text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">New Invoice</button>
+                </div>
+
+                <!-- Right Controls -->
+                <div class="flex items-center gap-x-3">
+                    <button onclick="toggleTheme()" 
+                            class="w-10 h-10 flex items-center justify-center rounded-2xl border border-slate-200 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-800 transition">
+                        <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                    
+                    <div class="flex items-center gap-x-3 pl-4 border-l border-slate-200 dark:border-slate-700">
+                        <div class="text-right">
+                            <p class="text-sm font-semibold">Krishna</p>
+                            <p class="text-[10px] text-slate-500">Owner</p>
+                        </div>
+                        <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-amber-400 to-yellow-500 flex items-center justify-center text-white text-lg font-bold ring-2 ring-white dark:ring-slate-800">K</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== HOME / DASHBOARD SCREEN ==================== -->
+    <div id="homeScreen" class="screen active max-w-screen-2xl mx-auto px-8 pt-8 pb-20">
+        
+        <!-- Welcome -->
+        <div class="flex items-end justify-between mb-8">
+            <div>
+                <h1 class="text-5xl font-semibold tracking-tighter heading-serif">Good Evening, Krishna bhai</h1>
+                <p class="mt-2 text-xl text-slate-600 dark:text-slate-400">All systems ready. 100% offline.</p>
+            </div>
+            <div class="px-5 py-2 rounded-3xl bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-sm font-medium flex items-center gap-x-2">
+                <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                <span>Offline Mode Active</span>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+            <div class="glass rounded-3xl p-7 border border-slate-200 dark:border-slate-700 premium-shadow">
+                <div class="flex justify-between">
+                    <div>
+                        <p class="text-xs font-semibold tracking-widest text-slate-500">INVOICES THIS MONTH</p>
+                        <p class="mt-4 text-6xl font-semibold tabular-nums metric-value">147</p>
+                    </div>
+                    <div class="text-emerald-500"><svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2 2 2 0 012 2v14a2 2 0 01-2 2z"/></svg></div>
+                </div>
+                <p class="text-emerald-600 text-sm mt-3 font-medium">↑ 23% from last month</p>
+            </div>
+
+            <div class="glass rounded-3xl p-7 border border-slate-200 dark:border-slate-700 premium-shadow">
+                <div class="flex justify-between">
+                    <div>
+                        <p class="text-xs font-semibold tracking-widest text-slate-500">TOTAL REVENUE</p>
+                        <p class="mt-4 text-6xl font-semibold tabular-nums metric-value">₹48.2L</p>
+                    </div>
+                    <div class="text-amber-500"><svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/></svg></div>
+                </div>
+                <p class="text-emerald-600 text-sm mt-3 font-medium">↑ ₹9.4L this month</p>
+            </div>
+
+            <div class="glass rounded-3xl p-7 border border-slate-200 dark:border-slate-700 premium-shadow">
+                <div class="flex justify-between">
+                    <div>
+                        <p class="text-xs font-semibold tracking-widest text-slate-500">PENDING COLLECTION</p>
+                        <p class="mt-4 text-6xl font-semibold tabular-nums metric-value">₹12.8L</p>
+                    </div>
+                    <div class="text-orange-500"><svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 01-9 9 9 9 0 01-9-9 9 9 0 019-9 9 9 0 019 9z"/></svg></div>
+                </div>
+                <p class="text-orange-600 text-sm mt-3 font-medium">42 invoices pending</p>
+            </div>
+
+            <div class="glass rounded-3xl p-7 border border-slate-200 dark:border-slate-700 premium-shadow">
+                <div class="flex justify-between">
+                    <div>
+                        <p class="text-xs font-semibold tracking-widest text-slate-500">ACTIVE PARTIES</p>
+                        <p class="mt-4 text-6xl font-semibold tabular-nums metric-value">300</p>
+                    </div>
+                    <div class="text-violet-500"><svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 01-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+                </div>
+                <p class="text-slate-500 text-sm mt-3 font-medium">18 new this month</p>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="mb-10">
+            <h2 class="section-header text-2xl font-semibold mb-6 px-1">Quick Actions</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                
+                <button id="newInvoice" onclick="showScreen('invoiceScreen')" 
+                        class="flex flex-col items-center justify-center gap-y-4 p-8 rounded-3xl bg-gradient-to-br from-[#1E3A8A] to-[#3B82F6] text-white premium-shadow hover:brightness-105 active:scale-[0.985] transition-all">
+                    <div class="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" d="M12 4v16m8-8H4"/></svg>
+                    </div>
+                    <div class="text-center">
+                        <p class="font-semibold text-2xl tracking-tight">New Invoice</p>
+                        <p class="text-xs opacity-75">Create professional GST invoice</p>
+                    </div>
+                </button>
+
+                <button onclick="showToast('Invoice History module ready (history.js will handle full list)', 'info')" 
+                        class="flex flex-col items-center justify-center gap-y-4 p-8 rounded-3xl glass border border-slate-200 dark:border-slate-700 hover:border-slate-300 transition-all">
+                    <div class="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-slate-700 dark:text-slate-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2"/></svg>
+                    </div>
+                    <div class="text-center">
+                        <p class="font-semibold text-2xl tracking-tight">Invoice History</p>
+                        <p class="text-xs text-slate-500">147 saved • Search &amp; manage</p>
+                    </div>
+                </button>
+
+                <button onclick="showToast('Master upload available in Settings', 'info')" 
+                        class="flex flex-col items-center justify-center gap-y-4 p-8 rounded-3xl glass border border-slate-200 dark:border-slate-700 hover:border-slate-300 transition-all">
+                    <div class="w-16 h-16 rounded-2xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v-4m0 0l4 4m-4-4l4-4m12 4v4m0 0l-4-4m4 4l-4 4"/></svg>
+                    </div>
+                    <div class="text-center">
+                        <p class="font-semibold text-2xl tracking-tight">Upload Masters</p>
+                        <p class="text-xs text-slate-500">Party • Product • Transport</p>
+                    </div>
+                </button>
+onclick="SettingsManager.openSettingsScreen()"
+                <button 
+                        class="flex flex-col items-center justify-center gap-y-4 p-8 rounded-3xl glass border border-slate-200 dark:border-slate-700 hover:border-slate-300 transition-all">
+                    <div class="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-slate-700 dark:text-slate-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 002.572 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 2.572c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-2.572-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    </div>
+                    <div class="text-center">
+                        <p class="font-semibold text-2xl tracking-tight">Settings</p>
+                        <p class="text-xs text-slate-500">Company • Backup • Theme</p>
+                    </div>
+                </button>
+
+                <button onclick="performQuickBackup()" 
+                        class="flex flex-col items-center justify-center gap-y-4 p-8 rounded-3xl glass border border-slate-200 dark:border-slate-700 hover:border-emerald-300 transition-all">
+                    <div class="w-16 h-16 rounded-2xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+                    </div>
+                    <div class="text-center">
+                        <p class="font-semibold text-2xl tracking-tight">Quick Backup</p>
+                        <p class="text-xs text-slate-500">One-click full export</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Recent Invoices Preview -->
+        <div>
+            <div class="flex items-center justify-between mb-4 px-1">
+                <h2 class="section-header text-2xl font-semibold">Recent Invoices</h2>
+                <button onclick="showToast('Full history available in history.js module', 'info')" class="text-sm font-semibold text-[#1E3A8A] flex items-center gap-x-1">View All →</button>
+            </div>
+            
+            <div class="modern-table border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
+                <table class="w-full text-sm">
+                    <thead class="bg-slate-50 dark:bg-slate-800 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                        <tr>
+                            <th class="px-8 py-4 text-left">Invoice No</th>
+                            <th class="px-6 py-4 text-left">Date</th>
+                            <th class="px-6 py-4 text-left">Party</th>
+                            <th class="px-6 py-4 text-right">Amount</th>
+                            <th class="px-6 py-4 text-center">Status</th>
+                            <th class="px-8 py-4 text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                        <tr class="invoice-line">
+                            <td class="px-8 py-4 font-mono font-semibold text-[#1E3A8A]">KCS/2026-27/00142</td>
+                            <td class="px-6 py-4 text-slate-600 dark:text-slate-300">08 Jul 2026</td>
+                            <td class="px-6 py-4 font-medium">M/s. New Shah Trading</td>
+                            <td class="px-6 py-4 text-right font-semibold tabular-nums">₹1,84,750</td>
+                            <td class="px-6 py-4 text-center"><span class="px-4 py-1 text-xs rounded-full bg-emerald-100 text-emerald-700 font-medium">Paid</span></td>
+                            <td class="px-8 py-4 text-center"><button class="px-5 py-1.5 text-xs font-semibold rounded-2xl bg-[#1E3A8A] text-white">View</button></td>
+                        </tr>
+                        <tr class="invoice-line">
+                            <td class="px-8 py-4 font-mono font-semibold text-[#1E3A8A]">KCS/2026-27/00141</td>
+                            <td class="px-6 py-4 text-slate-600 dark:text-slate-300">07 Jul 2026</td>
+                            <td class="px-6 py-4 font-medium">Venus Mehta Distributors</td>
+                            <td class="px-6 py-4 text-right font-semibold tabular-nums">₹92,400</td>
+                            <td class="px-6 py-4 text-center"><span class="px-4 py-1 text-xs rounded-full bg-amber-100 text-amber-700 font-medium">Pending</span></td>
+                            <td class="px-8 py-4 text-center"><button class="px-5 py-1.5 text-xs font-semibold rounded-2xl bg-[#1E3A8A] text-white">View</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== INVOICE SCREEN (Exact structure for app.js) ==================== -->
+    <div id="invoiceScreen" class="screen max-w-screen-2xl mx-auto px-8 pt-6 pb-16">
+        
+        <!-- Invoice Header -->
+        <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center gap-x-4">
+                <button onclick="showScreen('homeScreen')" class="flex items-center gap-x-2 text-sm font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-300">
+                    ← Back to Dashboard
+                </button>
+                <div class="h-6 w-px bg-slate-200 dark:bg-slate-700"></div>
+                <h1 class="text-4xl font-semibold tracking-tighter">Create Invoice</h1>
+            </div>
+            
+            <div class="flex items-center gap-x-4">
+                <div>
+                    <label class="text-xs font-medium text-slate-500 block mb-1">Invoice No</label>
+                    <input id="invoiceNo" type="text" value="KCS/2026-27/00143" readonly
+                           class="form-input w-56 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-2xl px-4 py-2.5 text-lg font-mono font-semibold text-[#1E3A8A]">
+                </div>
+                <div>
+                    <label class="text-xs font-medium text-slate-500 block mb-1">Date</label>
+                    <input id="invoiceDate" type="date" value="2026-07-10"
+                           class="form-input w-44 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-2xl px-4 py-2.5 text-sm">
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+            
+            <!-- Left Column: Party + Products -->
+            <div class="xl:col-span-8 space-y-8">
+                
+                <!-- Party Selection -->
+                <div class="glass rounded-3xl p-8 border border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center justify-between mb-5">
+                        <h3 class="font-semibold text-xl">Select Party</h3>
+                        <button onclick="showToast('Party search will be enhanced in app.js', 'info')" class="text-xs px-4 py-1 rounded-2xl border border-slate-300 text-slate-600">Advanced Search</button>
+                    </div>
+                    
+                    <input id="partySelect" type="text" placeholder="Search by Name, GSTIN, Mobile, City or Party Code..." 
+                           class="form-input w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-3xl px-6 py-4 text-lg mb-4">
+                    
+                    <!-- Party Details Card -->
+                    <div id="partyDetailsCard" class="hidden mt-4 p-5 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                        <div class="grid grid-cols-2 gap-x-8 text-sm">
+                            <div>
+                                <p class="text-xs text-slate-500">PARTY NAME</p>
+                                <p id="partyNameDisplay" class="font-semibold text-lg"></p>
+                                <p id="partyGSTINDisplay" class="font-mono text-xs text-slate-500 mt-0.5"></p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-slate-500">OUTSTANDING</p>
+                                <p id="partyOutstandingDisplay" class="font-semibold text-2xl text-orange-600 tabular-nums"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products -->
+                <div class="glass rounded-3xl p-8 border border-slate-200 dark:border-slate-700">
+                    <h3 class="font-semibold text-xl mb-5">Add Products</h3>
+                    
+                    <div class="flex gap-3">
+                        <input id="productSelect" type="text" placeholder="Search Product by Name, HSN, Category, Size, Finish or Code..." 
+                               class="form-input flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-3xl px-6 py-3.5 text-base">
+                        
+                        <button id="addProductBtn" 
+                                class="px-8 rounded-3xl bg-[#1E3A8A] text-white font-semibold flex items-center gap-x-2 hover:bg-[#172d6b] active:scale-[0.985] transition-all">
+                            <span>+ Add</span>
+                        </button>
+                    </div>
+
+                    <!-- Invoice Items Table -->
+                    <div class="mt-6 modern-table border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
+                        <table class="w-full text-sm">
+                            <thead class="bg-slate-50 dark:bg-slate-800 text-xs font-semibold text-slate-500">
+                                <tr>
+                                    <th class="px-6 py-3 text-left w-2/5">Product</th>
+                                    <th class="px-4 py-3 text-center">HSN</th>
+                                    <th class="px-4 py-3 text-center">Qty (Boxes)</th>
+                                    <th class="px-4 py-3 text-right">Rate</th>
+                                    <th class="px-4 py-3 text-right">Taxable</th>
+                                    <th class="px-4 py-3 text-right">CGST</th>
+                                    <th class="px-4 py-3 text-right">SGST/IGST</th>
+                                    <th class="px-4 py-3 text-right">Total</th>
+                                    <th class="px-3 py-3 w-8"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="invoiceItemsBody" class="divide-y divide-slate-100 dark:divide-slate-700 text-sm">
+                                <!-- Rows added dynamically by app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Totals + Transport + Actions -->
+            <div class="xl:col-span-4 space-y-6">
+                
+                <!-- Totals Card -->
+                <div class="glass rounded-3xl p-8 border border-slate-200 dark:border-slate-700 sticky top-24">
+                    <h3 class="font-semibold text-xl mb-6">Invoice Summary</h3>
+                    
+                    <div class="space-y-4 text-sm">
+                        <div class="flex justify-between"><span class="text-slate-600 dark:text-slate-300">Subtotal (Taxable)</span> <span id="subtotalAmount" class="font-semibold tabular-nums">₹0.00</span></div>
+                        <div class="flex justify-between"><span class="text-slate-600 dark:text-slate-300">Total CGST</span> <span id="gstTotalAmount" class="font-semibold tabular-nums">₹0.00</span></div>
+                        <div class="flex justify-between"><span class="text-slate-600 dark:text-slate-300">Total SGST / IGST</span> <span id="igstTotalAmount" class="font-semibold tabular-nums">₹0.00</span></div>
+                        
+                        <div class="h-px bg-slate-200 dark:bg-slate-700 my-2"></div>
+                        
+                        <div class="flex justify-between items-baseline text-xl">
+                            <span class="font-semibold">Grand Total</span> 
+                            <span id="grandTotalAmount" class="font-bold tabular-nums text-3xl text-[#1E3A8A]">₹0.00</span>
+                        </div>
+                        
+                        <div class="pt-3 text-xs text-slate-500">
+                            Amount in Words: <span id="amountInWords" class="font-medium text-slate-700 dark:text-slate-200"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transport -->
+                <div class="glass rounded-3xl p-7 border border-slate-200 dark:border-slate-700">
+                    <h3 class="font-semibold mb-4">Transport Details</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="text-xs font-medium text-slate-500">Transport</label>
+                            <input id="transportSelect" type="text" placeholder="Search transporter..." 
+                                   class="form-input mt-1 w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-2xl px-4 py-2.5 text-sm">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="text-xs font-medium text-slate-500">LR Number</label>
+                                <input id="lrNumber" type="text" class="form-input mt-1 w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-2xl px-4 py-2 text-sm">
+                            </div>
+                            <div>
+                                <label class="text-xs font-medium text-slate-500">Vehicle No</label>
+                                <input id="vehicleNumber" type="text" class="form-input mt-1 w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-2xl px-4 py-2 text-sm">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div class="glass rounded-3xl p-7 border border-slate-200 dark:border-slate-700">
+                    <label class="text-xs font-medium text-slate-500">Notes / Narration</label>
+                    <textarea id="invoiceNotes" rows="3" placeholder="Any special instructions..." 
+                              class="form-input mt-2 w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-2xl px-4 py-3 text-sm resize-y"></textarea>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="space-y-3 pt-2">
+                    <button id="generatePDFBtn"
+                            class="w-full py-4 rounded-3xl bg-gradient-to-r from-[#1E3A8A] to-[#3B82F6] text-white font-semibold text-lg flex items-center justify-center gap-x-3 premium-btn active:scale-[0.985]">
+                        <span>Generate &amp; Download Premium PDF</span>
+                    </button>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <button id="clearInvoiceBtn"
+                                class="py-3.5 rounded-3xl border border-slate-300 dark:border-slate-600 font-semibold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition">Clear Form</button>
+                        <button onclick="showScreen('homeScreen')"
+                                class="py-3.5 rounded-3xl border border-slate-300 dark:border-slate-600 font-semibold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Utility Inputs (for app.js) -->
+    <input type="file" id="excelFile" accept=".xlsx,.xls" hidden>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-[200] space-y-3"></div>
+
+    <!-- Core Script (Minimal for screen switching + theme. Full logic in app.js) -->
+    <script>
+        function initializeTailwind() {
+            // Tailwind already loaded via CDN
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+            updateThemeIcon();
+        }
+
+        function updateThemeIcon() {
+            const icon = document.getElementById('theme-icon');
+            if (!icon) return;
+            icon.innerHTML = document.documentElement.classList.contains('dark') 
+                ? `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />`
+                : `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />`;
+        }
+
+        function initTheme() {
+            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+            updateThemeIcon();
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            let bg = type === 'error' ? 'bg-red-600' : type === 'info' ? 'bg-blue-600' : 'bg-emerald-600';
+            
+            toast.className = `px-6 py-4 rounded-3xl shadow-2xl text-white flex items-center gap-x-3 max-w-sm ${bg}`;
+            toast.innerHTML = `
+                <div class="flex-1 text-sm font-medium">${message}</div>
+                <button onclick="this.parentElement.remove()" class="text-xl leading-none opacity-70 hover:opacity-100">×</button>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 4200);
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            
+            // Update nav active state
+            document.getElementById('nav-home').classList.toggle('nav-active', screenId === 'homeScreen');
+            document.getElementById('nav-invoice').classList.toggle('nav-active', screenId === 'invoiceScreen');
+        }
+
+        function performQuickBackup() {
+            showToast('Creating local backup... (storage.js will handle full export)', 'info');
+        }
+
+        function initializeApp() {
+            initializeTailwind();
+            initTheme();
+            
+            // Show dashboard by default
+            document.getElementById('homeScreen').classList.add('active');
+            
+            // Keyboard shortcut hint
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key.toLowerCase() === 'n') {
+                    e.preventDefault();
+                    showScreen('invoiceScreen');
+                }
+            });
+            
+            // Demo: Show one toast on first load
+            setTimeout(() => {
+                if (!localStorage.getItem('seenWelcome')) {
+                    showToast('Welcome! Press Ctrl + N to create new invoice quickly.', 'info');
+                    localStorage.setItem('seenWelcome', 'true');
+                }
+            }, 2800);
+            
+            console.log('%c[Krishna Invoice] index.html initialized with full DOM structure for app.js', 'color:#64748b');
+        }
+
+        window.onload = initializeApp;
+    </script>
+</body>
+</html>
